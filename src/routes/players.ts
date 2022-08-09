@@ -1,16 +1,15 @@
 import { Router } from "express";
 
-import { createPlayer } from "../controllers/players";
+import { createPlayer, getAllPlayers } from "../controllers/players";
 
 const router = Router();
 
-router.post("/",createPlayer);
+router.post("/", createPlayer);
 
-router.get("/");
+router.get("/", getAllPlayers);
 
 router.patch("/:id");
 
 router.delete("/:id");
 
-
-export default router
+export default router;
