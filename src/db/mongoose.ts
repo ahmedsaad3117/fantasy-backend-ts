@@ -1,4 +1,5 @@
 import { connect } from "mongoose";
 
-
-export const connectionMong = connect('mongodb://localhost:27017/test');
+connect('mongodb://localhost:27017/fantasy-api').then(()=>{
+  console.log('connectd scuesss')
+})

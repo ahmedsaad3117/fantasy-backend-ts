@@ -19,11 +19,12 @@ exports.getAllPlayers = getAllPlayers;
 const updatePlayer = (req, res, next) => {
     const playerId = req.params.id;
     const updates = Object.keys(req.body);
-    const isVaildUpdate = updates.every((update) => update in player_1.Player);
+    const isVaildUpdate = updates.every((update) => );
+    console.log(player_1.Player);
     if (!isVaildUpdate) {
         res.status(500).json({ error: "This not a vaild update" });
     }
-    //const updatedName = (req.body as { name: string }).name
+    //const updatedName = (req.body as { name: string }).name;
     const playerIndex = PLAYERS.findIndex(player => player.id === playerId);
     updates.forEach((update) => {
         PLAYERS[playerIndex] = req.body[update];

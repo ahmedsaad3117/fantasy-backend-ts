@@ -10,29 +10,30 @@ export const createPlayer: RequestHandler = (req, res, next) => {
     const position = (req.body as { position: string }).position;
     const newPlayer = new Player(Math.random().toString(), name, playerNumber, position);
 
-    PLAYERS.push(newPlayer)
-    res.status(201).json({ message: 'added successfully...', createdPlayer: newPlayer })
+    PLAYERS.push(newPlayer);
+    res.status(201).json({ message: 'added successfully...', createdPlayer: newPlayer });
 };
 
 export const getAllPlayers: RequestHandler = (req, res, next) => {
-    res.json({ players: PLAYERS })
+    res.json({ players: PLAYERS });
 }
 
 export const updatePlayer: RequestHandler<{ id: string }> = (req, res, next) => {
     const playerId = req.params.id;
-    const updates = Object.keys(req.body)
+    const updates = Object.keys(req.body);
+ 
+   // const isVaildUpdate = updates.every((update) =>  );
+    console.log(Player)
+ 
+    // if (!isVaildUpdate) {
+    //     res.status(500).json({ error: "This not a vaild update" });
+    // }
 
-    const isVaildUpdate = updates.every((update) => update in Player)
-
-    if (!isVaildUpdate) {
-        res.status(500).json({ error: "This not a vaild update" })
-    }
-
-    //const updatedName = (req.body as { name: string }).name
+    //const updatedName = (req.body as { name: string }).name;
 
     const playerIndex = PLAYERS.findIndex(player => player.id === playerId);
 
     updates.forEach((update) => {
-        PLAYERS[playerIndex] = req.body[update]
+        PLAYERS[playerIndex] = req.body[update];
     })
 }

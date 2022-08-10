@@ -5,6 +5,6 @@ const players_1 = require("../controllers/players");
 const router = (0, express_1.Router)();
 router.post("/", players_1.createPlayer);
 router.get("/", players_1.getAllPlayers);
-router.patch("/:id");
+router.patch("/:id", players_1.updatePlayer);
 router.delete("/:id");
 exports.default = router;

@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import playersRoute from "./routes/players";
-import { connectionMong } from "./db/mongoose"; 
+import './db/mongoose'
+
 
 const port = process.env.PORT;
 const app = express();
@@ -15,7 +16,6 @@ app.get('/', (req, res) => {
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     res.status(500).json({ message: err.message });
 });
-
 
 app.listen(port, () => {
     console.log("Server is up on " + port);
