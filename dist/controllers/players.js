@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePlayer = exports.getAllPlayers = exports.createPlayer = void 0;
+exports.deletePlayer = exports.updatePlayer = exports.getAllPlayers = exports.createPlayer = void 0;
 const player_1 = require("../models/player");
 const PLAYERS = [];
 const createPlayer = (req, res, next) => {
@@ -19,15 +19,30 @@ exports.getAllPlayers = getAllPlayers;
 const updatePlayer = (req, res, next) => {
     const playerId = req.params.id;
     const updates = Object.keys(req.body);
-    const isVaildUpdate = updates.every((update) => );
-    console.log(player_1.Player);
+    const allowUpdate = ["name", "number", "position"];
+    const isVaildUpdate = updates.every((update) => allowUpdate.includes(update));
     if (!isVaildUpdate) {
         res.status(500).json({ error: "This not a vaild update" });
     }
-    //const updatedName = (req.body as { name: string }).name;
     const playerIndex = PLAYERS.findIndex(player => player.id === playerId);
-    updates.forEach((update) => {
-        PLAYERS[playerIndex] = req.body[update];
-    });
+    if (playerIndex === -1) {
+        res.status(500).json({ error: "Player Id not exist" });
+    }
+    else {
+        updates.forEach((update) => {
+            PLAYERS[playerIndex][update] = req.body[update];
+        });
+        res.json({ message: 'Updated!', updatedPlayer: PLAYERS[playerIndex] });
+    }
 };
 exports.updatePlayer = updatePlayer;
+const deletePlayer = (req, res, next) => {
+    const playerId = req.params.id;
+    const playerIndex = PLAYERS.findIndex(player => player.id === playerId);
+    if (playerIndex < 0) {
+        throw new Error('Could not find player!');
+    }
+    PLAYERS.splice(playerIndex, 1);
+    res.json({ message: 'Player Deleted!' });
+};
+exports.deletePlayer = deletePlayer;

@@ -21,19 +21,38 @@ export const getAllPlayers: RequestHandler = (req, res, next) => {
 export const updatePlayer: RequestHandler<{ id: string }> = (req, res, next) => {
     const playerId = req.params.id;
     const updates = Object.keys(req.body);
- 
-   // const isVaildUpdate = updates.every((update) =>  );
-    console.log(Player)
- 
-    // if (!isVaildUpdate) {
-    //     res.status(500).json({ error: "This not a vaild update" });
-    // }
 
-    //const updatedName = (req.body as { name: string }).name;
+    const allowUpdate = ["name", "number", "position"];
+
+    const isVaildUpdate = updates.every((update) => allowUpdate.includes(update));
+
+    if (!isVaildUpdate) {
+        res.status(500).json({ error: "This not a vaild update" });
+    }
 
     const playerIndex = PLAYERS.findIndex(player => player.id === playerId);
 
-    updates.forEach((update) => {
-        PLAYERS[playerIndex] = req.body[update];
-    })
+    if (playerIndex === -1) {
+        res.status(500).json({ error: "Player Id not exist" });
+    } else {
+        updates.forEach((update: string) => {
+            (PLAYERS[playerIndex] as any)[update] = req.body[update]
+        })
+
+        res.json({ message: 'Updated!', updatedPlayer: PLAYERS[playerIndex] })
+    }
+}
+
+
+export const deletePlayer: RequestHandler = (req, res, next) => {
+    const playerId = req.params.id;
+    const playerIndex = PLAYERS.findIndex(player => player.id === playerId);
+
+    if (playerIndex < 0) {
+        throw new Error('Could not find player!')
+    }
+
+    PLAYERS.splice(playerIndex, 1)
+
+    res.json({ message: 'Player Deleted!' })
 }

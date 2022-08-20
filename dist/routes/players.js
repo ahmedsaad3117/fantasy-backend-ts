@@ -6,5 +6,5 @@ const router = (0, express_1.Router)();
 router.post("/", players_1.createPlayer);
 router.get("/", players_1.getAllPlayers);
 router.patch("/:id", players_1.updatePlayer);
-router.delete("/:id");
+router.delete("/:id", players_1.deletePlayer);
 exports.default = router;
