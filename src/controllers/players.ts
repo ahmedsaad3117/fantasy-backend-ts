@@ -44,9 +44,9 @@ export const updatePlayer: RequestHandler<{ id: string }> = (req, res, next) => 
 }
 
 
-export const deletePlayer: RequestHandler = (req, res, next) => {
+export const deletePlayer: RequestHandler = (req, res, next) => { 
     const playerId = req.params.id;
-    const playerIndex = PLAYERS.findIndex(player => player.id === playerId);
+    const playerIndex = PLAYERS.findIndex(player => player.id === playerId); 
 
     if (playerIndex < 0) {
         throw new Error('Could not find player!')
